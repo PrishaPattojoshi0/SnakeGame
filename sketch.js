@@ -1,4 +1,5 @@
 var snake,bug;
+var gameState = PLAY;
 
 function setup() {
   createCanvas(800,500);
@@ -12,22 +13,22 @@ function setup() {
 
 function draw() {
   background(0,0,0);  
-
-  /*if (keyCode === DOWN){
+if (gameState === PLAY){
+  if (keyCode === 40){
     snake.velocityY = 3;
   }
 
-  if (keyCode === UP){
+  if (keyCode === 38){
     snake.velocityY = -3;
   }
 
-  if (keyCode === LEFT){
+  if (keyCode === 37){
     snake.velocityX = -3;
   }
 
-  if (keyCode === RIGHT){
+  if (keyCode === 39){
     snake.velocityX = 3;
-  }*/
+  }
 
   if (snake.x-bug.x < snake.width/2+bug.width/2 && bug.x - snake.x < bug.width/2 + snake.width/2
    && snake.y-bug.y < snake.height/2+bug.height/2 && bug.y - snake.y < bug.height/2 + snake.height/2)
@@ -38,7 +39,20 @@ function draw() {
       bug.y = random(30,470);  
    }
 
+   if (snake.x-snake.x < snake.width/2+snake.width/2 && snake.x - snake.x < snake.width/2 + snake.width/2
+    && snake.y-snake.y < snake.height/2+snake.height/2 && snake.y - snake.y < snake.height/2 + snake.height/2)
+    {
+    gameState = END;
+    }
+  }
   
+else if (gameState === END){
+  bug.destroy();
+  snake.destroy();
+  background("red");
+
+  text("Game Over!",200,200);
+}
 
   drawSprites();
 }
