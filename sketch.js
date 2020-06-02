@@ -1,8 +1,12 @@
+PLAY = 1;
+END = 0;
+
 var snake,bug;
-var gameState = PLAY;
 
 function setup() {
   createCanvas(800,500);
+
+  var gameState = PLAY;
 
   snake = createSprite(400, 250, 20, 20);
   snake.shapeColor = "green";
@@ -12,7 +16,8 @@ function setup() {
 }
 
 function draw() {
-  background(0,0,0);  
+  background(0,0,0); 
+   
 if (gameState === PLAY){
   if (keyCode === 40){
     snake.velocityY = 3;
@@ -39,8 +44,8 @@ if (gameState === PLAY){
       bug.y = random(30,470);  
    }
 
-   if (snake.x-snake.x < snake.width/2+snake.width/2 && snake.x - snake.x < snake.width/2 + snake.width/2
-    && snake.y-snake.y < snake.height/2+snake.height/2 && snake.y - snake.y < snake.height/2 + snake.height/2)
+   if (snake.x-snake.x < snake.width/2+snake.width/2&&snake.x - snake.x<snake.width/2+snake.width/2
+    && snake.y-snake.y < snake.height/2+snake.height/2&&snake.y - snake.y<snake.height/2+snake.height/2)
     {
     gameState = END;
     }
