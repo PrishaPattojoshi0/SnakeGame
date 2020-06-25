@@ -1,63 +1,49 @@
-PLAY = 1;
-END = 0;
+var snake;
+var foodX,foodY;
 
-var snake,bug;
+function setup(){
+  createCanvas(800,400);
 
-function setup() {
-  createCanvas(800,500);
+  snake = new Snake();
 
-  var gameState = PLAY;
+foodLocation();
+frameRate(3);
 
-  snake = createSprite(400, 250, 20, 20);
-  snake.shapeColor = "green";
-
-  bug = createSprite(200,200,20,20);
-  bug.shapeColor = "red";
 }
 
 function draw() {
-  background(0,0,0); 
-   
-if (gameState === PLAY){
-  if (keyCode === 40){
-    snake.velocityY = 3;
-  }
-
-  if (keyCode === 38){
-    snake.velocityY = -3;
-  }
-
-  if (keyCode === 37){
-    snake.velocityX = -3;
-  }
-
-  if (keyCode === 39){
-    snake.velocityX = 3;
-  }
-
-  if (snake.x-bug.x < snake.width/2+bug.width/2 && bug.x - snake.x < bug.width/2 + snake.width/2
-   && snake.y-bug.y < snake.height/2+bug.height/2 && bug.y - snake.y < bug.height/2 + snake.height/2)
-   {
-      bug.destroy();
-      snake.height = snake.height+1 ;
-      bug.x = random(20,780);
-      bug.y = random(30,470);  
-   }
-
-   if (snake.x-snake.x < snake.width/2+snake.width/2&&snake.x - snake.x<snake.width/2+snake.width/2
-    && snake.y-snake.y < snake.height/2+snake.height/2&&snake.y - snake.y<snake.height/2+snake.height/2)
-    {
-    gameState = END;
-    }
-  }
+  background("skyBlue"); 
+  snake.update();
   
-else if (gameState === END){
-  bug.destroy();
-  snake.destroy();
-  background("red");
-
-  text("Game Over!",200,200);
+  if(snake.eat(foodX,foodY)){
+    foodLocation();   //Getting location of Food
+  }
+  snake.display();
+  fill("yellow");
+  rect(foodX,foodY,20,20);  //Create Food along with location and size
+  snake.gameOver();   //Keep checking if Game is Over
 }
 
-  drawSprites();
+function keyPressed(){      //Code to control snake's direction
+  if(keyCode === LEFT_ARROW){
+    snake.xdir = -20;
+    snake.ydir = 0;
+  }
+  else if(keyCode === RIGHT_ARROW){
+    snake.xdir = 20;
+    snake.ydir = 0;
+  }
+  if(keyCode === UP_ARROW){
+    snake.xdir = 0;
+    snake.ydir = -20;
+  }
+  if(keyCode === DOWN_ARROW){
+    snake.xdir = 0;
+    snake.ydir = 20;
+  }
+}
+
+function foodLocation (){       // Getting random location for Food
+  foodX = floor(random(0,40))*20; //Ensuring the food falls in grids of 20 units
+  foodY = floor(random(0,20))*20;
 }
